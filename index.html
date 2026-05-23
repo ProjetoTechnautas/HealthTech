@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0d1b5e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="SaúdeFácil" />
+  <meta name="description" content="Agendamento digital de senhas para UBS e Secretarias de Saúde" />
+  <title>SaúdeFácil — Agendamento de Saúde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app-root">
+  <div class="phone" id="phone">
+
+    <!-- INSTALL BANNER -->
+    <div class="install-banner" id="install-banner">
+      <span>📱 Instale o SaúdeFácil no seu celular</span>
+      <button class="install-btn" onclick="installApp()">Instalar</button>
+      <span class="install-close" onclick="document.getElementById('install-banner').remove()">✕</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 1: SPLASH / WELCOME                  -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen active" id="screen-splash">
+      <div class="splash">
+        <div class="splash-blob1"></div>
+        <div class="splash-blob2"></div>
+        <div class="splash-logo">SF</div>
+        <p class="splash-tagline">SaúdeFácil</p>
+        <div class="splash-buttons">
+          <button class="btn-primary" onclick="goTo('screen-cadastro1')">Criar conta</button>
+          <button class="btn-primary" style="background:#1a2a8c;" onclick="goTo('screen-login')">Entrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA LOGIN                                 -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-login">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-splash')">Voltar</button>
+        <span class="topbar-title">Entrar</span>
+        <span></span>
+      </div>
+      <div class="screen-body pb-safe">
+        <p class="form-section-title" style="margin-bottom:24px;margin-top:8px;">Acesse sua conta</p>
+        <div class="form-group">
+          <label class="form-label">CPF</label>
+          <input class="form-input" type="text" placeholder="000.000.000-00" id="login-cpf" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <input class="form-input" type="password" placeholder="Digite sua senha" id="login-senha" />
+        </div>
+        <div style="margin-top:24px;">
+          <button class="btn-primary" onclick="fazerLogin()">Entrar</button>
+        </div>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-gray);">
+          Não tem conta? <span style="color:var(--navy);font-weight:700;cursor:pointer;" onclick="goTo('screen-cadastro1')">Criar conta</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 2: CADASTRO — DADOS PESSOAIS          -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-cadastro1">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-splash')">Voltar</button>
+        <span class="topbar-title">Criar conta</span>
+        <span></span>
+      </div>
+      <div class="screen-body pb-safe">
+        <div class="wizard-steps">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+        </div>
+        <p class="form-section-title">Informações pessoais</p>
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="form-input" type="text" placeholder="Digite..." id="cad-nome" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Data de nascimento</label>
+            <input class="form-input" type="date" id="cad-nasc" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">CPF</label>
+            <input class="form-input" type="text" placeholder="000.000.000-00" id="cad-cpf" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <input class="form-input" type="tel" placeholder="+55 86 9 9999-9999" id="cad-tel" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" placeholder="Digite..." id="cad-email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <input class="form-input" type="password" placeholder="Crie uma senha" id="cad-pass" />
+        </div>
+        <div style="margin-top:20px; display:flex; gap:12px;">
+          <button class="btn-soft" onclick="goTo('screen-splash')" style="flex:1;">‹ Voltar</button>
+          <button class="btn-primary" onclick="irParaCadastro2()" style="flex:2;">Próximo ›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 3: CADASTRO — ENDEREÇO                -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-cadastro2">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-cadastro1')">Voltar</button>
+        <span class="topbar-title">Criar conta</span>
+        <span></span>
+      </div>
+      <div class="screen-body pb-safe">
+        <div class="wizard-steps">
+          <div class="step-dot"></div>
+          <div class="step-dot active"></div>
+        </div>
+        <p class="form-section-title">Endereço</p>
+        <div class="form-group">
+          <label class="form-label">Rua</label>
+          <input class="form-input" type="text" placeholder="Digite..." id="cad-rua" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Bairro</label>
+            <input class="form-input" type="text" placeholder="Digite..." id="cad-bairro" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Número</label>
+            <input class="form-input" type="text" placeholder="Nº" id="cad-num" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Estado</label>
+            <input class="form-input" type="text" placeholder="UF" id="cad-estado" maxlength="2" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cidade</label>
+            <input class="form-input" type="text" placeholder="Digite..." id="cad-cidade" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Complemento</label>
+          <input class="form-input" type="text" placeholder="Digite..." id="cad-comp" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Unidade Básica de Saúde com vínculo</label>
+          <select class="form-select" id="cad-ubs">
+            <option value="">Selecione sua UBS</option>
+            <option>UBS Centro</option>
+            <option>UBS Norte</option>
+            <option>UBS Sul</option>
+            <option>UBS Leste</option>
+            <option>UBS Oeste</option>
+          </select>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:12px;">
+          <button class="btn-soft" onclick="goTo('screen-cadastro1')" style="flex:1;">‹ Voltar</button>
+          <button class="btn-primary" onclick="concluirCadastro()" style="flex:2;">Cadastrar ›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 4: HOME                               -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-home">
+      <div class="topbar">
+        <span class="topbar-logo">SF</span>
+        <span class="topbar-greeting" id="home-greeting">Olá, Usuário</span>
+        <button class="btn-sair" onclick="sair()">Sair</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <div class="home-actions">
+          <div class="action-btn" onclick="goTo('screen-meus-agendamentos')">
+            <div class="action-icon">💓</div>
+            <span class="action-label">Meus Agendamentos</span>
+          </div>
+          <div class="action-btn" onclick="goTo('screen-local')">
+            <div class="action-icon">➕</div>
+            <span class="action-label">Solicitar Agendamento</span>
+          </div>
+          <div class="action-btn" onclick="goTo('screen-calendario')">
+            <div class="action-icon">📅</div>
+            <span class="action-label">Calendário</span>
+          </div>
+        </div>
+        <div class="banners-row">
+          <div class="banner banner-1">
+            <div class="banner-text">
+              <div class="banner-accent">VACINE-SE CONTRA</div>
+              O SARAMPO!<br>
+              <span style="font-size:11px;opacity:0.9;">Quem deve se vacinar</span>
+            </div>
+          </div>
+          <div class="banner banner-2">
+            <div class="banner-text">
+              PROGRAMA PARA<br>
+              <span class="banner-accent" style="color:#0d1b5e;">TRATAMENTO</span><br>
+              <span style="font-size:11px;">Consultas · Exames · +</span>
+            </div>
+          </div>
+        </div>
+        <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;color:var(--navy);margin-bottom:12px;">Lembretes</p>
+        <div id="lembretes-list">
+          <div class="lembrete-item">Nenhum lembrete no momento</div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')">
+          <span class="nav-icon">☰</span><span>Menu</span>
+        </div>
+        <div class="nav-item" onclick="goTo('screen-home')">
+          <span class="nav-icon">🏠</span><span>Início</span>
+        </div>
+        <div class="nav-item" onclick="goTo('screen-perfil')">
+          <span class="nav-icon">👤</span><span>Perfil</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA: MEUS AGENDAMENTOS                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-meus-agendamentos">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-home')">Voltar</button>
+        <span class="topbar-title">Meus Agendamentos</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe" id="meus-ag-list">
+        <p style="color:var(--text-gray);font-size:14px;margin-top:8px;">Nenhum agendamento ativo.</p>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA: HISTÓRICO                            -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-historico">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-meus-agendamentos')">Voltar</button>
+        <span class="topbar-title">Histórico</span>
+        <span></span>
+      </div>
+      <div class="screen-body pb-safe" id="historico-list">
+        <p style="color:var(--text-gray);font-size:14px;margin-top:8px;">Nenhum histórico ainda.</p>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 5: ESCOLHA DO LOCAL                   -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-local">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-home')">Voltar</button>
+        <span class="topbar-title">Agendamento</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <div class="section-header">
+          <h2>Escolha o local de atendimento:</h2>
+        </div>
+        <div class="list-item" onclick="selecionarLocal('Secretaria Municipal de Saúde')">
+          <div class="list-item-title">Secretaria Municipal de Saúde</div>
+          <div class="list-item-sub">Agendamento de consultas e exames laboratoriais</div>
+          <div class="list-item-arrow">›</div>
+        </div>
+        <div class="list-item" onclick="selecionarLocal('Unidade Básica de Saúde (Postos)')">
+          <div class="list-item-title">Unidade Básica de Saúde (Postos)</div>
+          <div class="list-item-sub">Agendamento de consultas e atendimentos</div>
+          <div class="list-item-arrow">›</div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 6: TIPO DE ATENDIMENTO                -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-tipo">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-local')">Voltar</button>
+        <span class="topbar-title">Agendamento</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <div class="section-header">
+          <h2>Escolha o local de atendimento:</h2>
+        </div>
+        <div class="list-item" style="opacity:0.6;cursor:default;">
+          <div class="list-item-title" id="tipo-local-label">Local selecionado</div>
+          <div class="list-item-sub">✓ Selecionado</div>
+        </div>
+        <div class="divider"></div>
+        <div style="background:white;border-radius:20px;padding:20px;margin-top:8px;">
+          <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;text-align:center;color:var(--navy);margin-bottom:10px;">Como será seu atendimento?</p>
+          <p style="font-size:12px;color:var(--text-gray);line-height:1.6;margin-bottom:16px;">
+            <strong>Prioritário</strong> é APENAS para os previstos na Lei nº 10.048/2000 e suas atualizações (Idosos a partir de 60 anos, portador de deficiência, gestantes, lactantes, pessoas com crianças de colo, pessoas com mobilidade reduzida, pessoas com transtorno do espectro autista, e doadores de sangue). <strong>Prioritário Especial</strong> é Apenas para idosos com mais de 80 anos e acompanhantes de crianças menores de um ano de idade.
+          </p>
+          <div class="type-buttons">
+            <button class="type-btn" onclick="selecionarTipo('Normal')">Normal</button>
+            <button class="type-btn" onclick="selecionarTipo('Prioritário')">Prioritário</button>
+            <button class="type-btn" style="width:100%;" onclick="selecionarTipo('Prioritário Especial')">Prioritário Especial</button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 7: SOLICITAÇÃO DE SENHA               -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-solicitar">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-tipo')">Voltar</button>
+        <span class="topbar-title">Solicitar Senha</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <p class="form-section-title">Solicitação de Senha</p>
+        <p style="font-weight:700;font-size:14px;color:var(--navy);margin-bottom:12px;">Marque o serviço procurado:</p>
+        <div class="radio-group" id="servico-options">
+          <label class="radio-item"><div class="radio-circle" data-val="Atendimento médico"></div>Atendimento médico</label>
+          <label class="radio-item"><div class="radio-circle" data-val="Atendimento com enfermeira"></div>Atendimento com enfermeira</label>
+          <label class="radio-item"><div class="radio-circle" data-val="Atendimento com psicóloga"></div>Atendimento com psicóloga</label>
+          <label class="radio-item"><div class="radio-circle" data-val="Atendimento com dentista"></div>Atendimento com dentista</label>
+          <label class="radio-item"><div class="radio-circle" data-val="Exames laboratoriais"></div>Exames laboratoriais</label>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+          <span style="font-size:14px;color:var(--text-dark);">Outro:</span>
+          <input class="outro-field" type="text" placeholder="Descreva o serviço..." id="servico-outro" />
+        </div>
+        <div class="divider"></div>
+        <div class="form-group">
+          <label class="form-label">Motivo de solicitação:</label>
+          <textarea class="form-input" style="border-radius:16px;resize:none;height:70px;" placeholder="Digite..." id="sol-motivo"></textarea>
+        </div>
+        <div class="divider"></div>
+        <p style="font-weight:700;font-size:14px;color:var(--navy);margin-bottom:10px;">Quando deseja ser atendido?</p>
+        <div class="form-group">
+          <label class="form-label">Dia</label>
+          <input class="form-input" type="date" id="sol-data" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horário</label>
+          <input class="form-input" type="time" id="sol-hora" />
+        </div>
+        <div class="divider"></div>
+        <p style="font-weight:700;font-size:14px;color:var(--navy);margin-bottom:12px;">Confirmação de dados pessoais</p>
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input class="form-input" type="text" id="sol-nome-conf" readonly style="opacity:0.7;" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Data de nascimento</label>
+            <input class="form-input" type="text" id="sol-nasc-conf" readonly style="opacity:0.7;" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">CPF</label>
+            <input class="form-input" type="text" id="sol-cpf-conf" readonly style="opacity:0.7;" />
+          </div>
+        </div>
+        <div class="checkbox-row" onclick="toggleConfirma()">
+          <div class="checkbox-circle" id="chk-confirma"></div>
+          <div>
+            <strong>Confirmo que todos os meus dados estão corretos</strong><br>
+            <span style="color:var(--navy);text-decoration:underline;cursor:pointer;" onclick="goTo('screen-perfil')">Caso deseje alterar seus dados, clique aqui</span>
+          </div>
+        </div>
+        <div style="margin-top:20px;">
+          <button class="btn-soft" id="btn-solicitar" onclick="solicitarSenha()" style="width:100%;opacity:0.6;" disabled>Solicitar Senha</button>
+        </div>
+        <div style="height:20px;"></div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 9: SUA SENHA (ATIVA)                  -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-sua-senha">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-meus-agendamentos')">Voltar</button>
+        <span class="topbar-title">Sua Senha</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;color:var(--navy);margin-bottom:16px;">Sua senha</p>
+        <div class="senha-card">
+          <span class="senha-label">Senha</span>
+          <span class="senha-number" id="view-senha-num">001</span>
+        </div>
+        <p class="senha-updated" id="view-senha-updated">Atualizada em —</p>
+        <div class="info-row">
+          <div class="info-label">Nome</div>
+          <div class="info-value" id="view-senha-nome">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Data de nascimento</div>
+          <div class="info-value light" id="view-senha-nasc">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">CPF</div>
+          <div class="info-value light" id="view-senha-cpf">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Tipo de atendimento</div>
+          <div class="info-value light" id="view-senha-tipo">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Status da senha</div>
+          <div class="badge ativa" id="view-senha-status">Ativa</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Data</div>
+          <div class="info-value light" id="view-senha-data">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Horário</div>
+          <div class="info-value light" id="view-senha-hora">—</div>
+        </div>
+        <div style="margin-top:20px;" id="btn-cancelar-wrapper">
+          <button class="btn-primary" style="background:#8b1a1a;" onclick="mostrarModalCancelar()">Cancelar Senha</button>
+        </div>
+        <div style="height:20px;"></div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+      <!-- Modal: deseja cancelar? (tela 10) -->
+      <div class="modal-overlay" id="modal-cancelar-1" style="display:none;">
+        <div class="modal-box">
+          <p class="modal-title">Você deseja cancelar seu agendamento e senha?</p>
+          <div class="modal-actions">
+            <button class="btn-soft" onclick="fecharModal('modal-cancelar-1')">Não</button>
+            <button class="btn-primary" style="background:#8b1a1a;" onclick="confirmarCancelamento()">Sim</button>
+          </div>
+        </div>
+      </div>
+      <!-- Modal: confirmar cancelamento (tela 11) -->
+      <div class="modal-overlay" id="modal-cancelar-2" style="display:none;">
+        <div class="modal-box">
+          <p class="modal-title" id="modal-cancelar-2-text">Confirmar Cancelamento da senha Nº — para atendimento —, no dia —?</p>
+          <div class="modal-actions">
+            <button class="btn-soft" onclick="fecharModal('modal-cancelar-2')">Cancelar</button>
+            <button class="btn-primary" style="background:#8b1a1a;" onclick="executarCancelamento()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+      <!-- Modal: cancelado (tela 12) -->
+      <div class="modal-overlay center" id="modal-cancelado-ok" style="display:none;">
+        <div class="modal-box center-box">
+          <p class="modal-title">Sua senha e agendamento foram cancelados</p>
+          <button class="btn-primary" onclick="posCancelamento()">Ok</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA 14: CALENDÁRIO                        -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-calendario">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-home')">Voltar</button>
+        <span class="topbar-title">Calendário</span>
+        <button class="btn-historico" onclick="goTo('screen-historico')">Histórico</button>
+      </div>
+      <div class="screen-body pb-safe">
+        <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;color:var(--navy);margin-bottom:14px;" id="cal-mes-titulo">Maio 2026</p>
+        <div class="calendar-grid">
+          <div class="cal-header" id="cal-header"></div>
+          <div class="cal-days" id="cal-days"></div>
+        </div>
+        <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;color:var(--navy);margin-bottom:12px;">Serviços disponíveis</p>
+        <div id="servicos-disponiveis"></div>
+        <div style="height:16px;"></div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+      <!-- Modal: salvar lembrete (tela 15) -->
+      <div class="modal-overlay" id="modal-salvar-lembrete" style="display:none;">
+        <div class="modal-box">
+          <p class="modal-title">Você deseja salvar esta informação?</p>
+          <div class="modal-actions">
+            <button class="btn-soft" onclick="fecharModal('modal-salvar-lembrete')">Não</button>
+            <button class="btn-primary" onclick="salvarLembrete()">Sim</button>
+          </div>
+        </div>
+      </div>
+      <!-- Modal: lembrete salvo (tela 16) -->
+      <div class="modal-overlay center" id="modal-lembrete-ok" style="display:none;">
+        <div class="modal-box center-box">
+          <p class="modal-title">Informação salva!</p>
+          <p class="modal-body">Você será lembrado sobre essa informação em até 2 dias antes. Ela também ficará salva em "Lembretes"</p>
+          <button class="btn-primary" onclick="fecharModal('modal-lembrete-ok')">Ok</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- TELA: PERFIL                               -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-perfil">
+      <div class="topbar">
+        <button class="btn-back" onclick="goTo('screen-home')">Voltar</button>
+        <span class="topbar-title">Meu Perfil</span>
+        <span></span>
+      </div>
+      <div class="screen-body pb-safe">
+        <div style="text-align:center;padding:20px 0;">
+          <div style="width:80px;height:80px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:32px;color:white;margin:0 auto 12px;">👤</div>
+          <p style="font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;color:var(--navy);" id="perfil-nome-display">—</p>
+          <p style="font-size:13px;color:var(--text-gray);" id="perfil-cpf-display">CPF: —</p>
+        </div>
+        <div class="divider"></div>
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="form-input" type="text" id="perfil-nome" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="text" id="perfil-email" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <input class="form-input" type="text" id="perfil-tel" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">UBS de vínculo</label>
+          <input class="form-input" type="text" id="perfil-ubs" readonly />
+        </div>
+        <div style="margin-top:16px;">
+          <button class="btn-soft" style="width:100%;" onclick="sair()">Sair da conta</button>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">☰</span><span>Menu</span></div>
+        <div class="nav-item" onclick="goTo('screen-home')"><span class="nav-icon">🏠</span><span>Início</span></div>
+        <div class="nav-item" onclick="goTo('screen-perfil')"><span class="nav-icon">👤</span><span>Perfil</span></div>
+      </div>
+    </div>
+
+  </div><!-- /phone -->
+</div><!-- /app-root -->
+<script src="js/global.js" defer></script>
+</body>
+</html>
