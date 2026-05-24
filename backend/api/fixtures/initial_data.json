@@ -1,0 +1,6 @@
+[
+  {"model": "api.unidadesaude", "pk": 1, "fields": {"nome": "UBS Centro", "tipo": "UBS", "endereco": "Rua das Flores, 100", "cidade": "Fortaleza", "ativa": true}},
+  {"model": "api.unidadesaude", "pk": 2, "fields": {"nome": "UBS Barra do Ceará", "tipo": "UBS", "endereco": "Av. Francisco Sá, 500", "cidade": "Fortaleza", "ativa": true}},
+  {"model": "api.unidadesaude", "pk": 3, "fields": {"nome": "UBS Messejana", "tipo": "UBS", "endereco": "Rua Coronel Chico Alves, 200", "cidade": "Fortaleza", "ativa": true}},
+  {"model": "api.unidadesaude", "pk": 4, "fields": {"nome": "Secretaria de Saúde Municipal", "tipo": "SECRETARIA", "endereco": "Av. Almirante Barroso, 600", "cidade": "Fortaleza", "ativa": true}}
+]
