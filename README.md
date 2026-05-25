@@ -1,4 +1,4 @@
-# SaúdeFácil — Django + React
+# Health Tech — Django + React
 
 App de agendamento digital de senhas para UBS e Secretarias de Saúde, convertido de HTML/JS vanilla para **Django REST Framework + React (Vite)**.
 
@@ -93,16 +93,3 @@ O app abre em **http://localhost:5173**
 
 Usa **Session Authentication** do Django. O React envia cookies de sessão e inclui o `X-CSRFToken` automaticamente via interceptor do axios.
 
----
-
-## O que mudou vs. versão original
-
-| Antes (HTML/JS) | Depois (Django + React) |
-|-----------------|------------------------|
-| Estado em memória (`const state`) | Banco de dados SQLite persistido |
-| Sem autenticação real | Login com CPF + senha (hash bcrypt) |
-| Dados perdidos ao recarregar | Dados persistem entre sessões |
-| HTML estático | Componentes React reutilizáveis |
-| Sem validação no servidor | Serializers DRF validam entradas |
-| Sem painel admin | Admin Django completo em /admin/ |
-| Número de senha calculado no front | Calculado atomicamente no back |

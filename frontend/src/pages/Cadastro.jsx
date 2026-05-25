@@ -122,8 +122,7 @@ export default function Cadastro() {
               <label className="form-label">UBS de preferência</label>
               <select className="form-input" value={dados.ubs_preferida} onChange={e => set('ubs_preferida', e.target.value)}>
                 <option>UBS Centro</option>
-                <option>UBS Barra do Ceará</option>
-                <option>UBS Messejana</option>
+                <option>UBS do Santo Antonio</option>
                 <option>Secretaria de Saúde Municipal</option>
               </select>
             </div>
